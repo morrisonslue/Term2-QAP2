@@ -197,13 +197,13 @@
 // function parseDateString(value) {
 //   // Input validation
 //   if (typeof value !== 'string') {
-//     throw new Error('Input must be a string in YYYY-MM-DD format.');
+//     throw new Error('Input must be in YYYY-MM-DD format');
 //   }
 
 //   const datePattern = /^\d{4}-\d{2}-\d{2}$/;
 
 //   if (!datePattern.test(value)) {
-//     throw new Error('Date string must be in YYYY-MM-DD format.');
+//     throw new Error('Date must be YYYY-MM-DD');
 //   }
 
 //   // Date components
@@ -214,19 +214,19 @@
 //   const day = parseInt(dayStr, 10);
 
 //   if (yearStr.length !== 4) {
-//     throw new Error('Year must be 4 digits.');
+//     throw new Error('Year must be 4 digits');
 //   }
 
 //   if (monthStr.length !== 2) {
-//     throw new Error('Month must be 2 digits.');
+//     throw new Error('Month must be 2 digits');
 //   }
 
 //   if (dayStr.length !== 2) {
-//     throw new Error('Day must be 2 digits.');
+//     throw new Error('Day must be 2 digits');
 //   }
 
 //   if (month < 1 || month > 12) {
-//     throw new Error('Month must be between 01 and 12.');
+//     throw new Error('Month must be between 01 and 12');
 //   }
 
 //   const isLeapYear =
@@ -340,11 +340,11 @@
     
 //     // Input validation
 //     if (!(value instanceof Date)) {
-//       throw new Error('Input must be a Date object.');
+//       throw new Error('Input must be a Date object');
 //     }
 
 //     if (isNaN(value.getTime())) {
-//       throw new Error('Invalid Date object.');
+//       throw new Error('Invalid Date object');
 //     }
 
 //     // Date Components
@@ -418,7 +418,7 @@
 // function normalizeCoord(value) {
 //   // Input string
 //   if (typeof value !== 'string') {
-//     throw new Error('Input must be a string.');
+//     throw new Error('Input must be a string');
 //   }
 
 //   value = value.replace(/^\s*\[|\]\s*$/g, '').trim();
@@ -427,14 +427,14 @@
 //   const parts = value.split(/\s*,\s*/);
 
 //   if (parts.length !== 2) {
-//     throw new Error('Invalid coordinate format.');
+//     throw new Error('Invalid coordinate formatting');
 //   }
 
 //   const num1 = parseFloat(parts[0]);
 //   const num2 = parseFloat(parts[1]);
 
 //   if (isNaN(num1) || isNaN(num2)) {
-//     throw new Error('Coordinates must be valid numbers.');
+//     throw new Error('Coordinates must be valid numbers');
 //   }
 
 //   // Order lat and long
@@ -447,16 +447,16 @@
 //     lat = num2;
 //     lng = num1;
 //   } else {
-//     throw new Error('Invalid coordinate values.');
+//     throw new Error('Invalid coordinates');
 //   }
 
 //   // Validation for coordinates
 //   if (lat < -90 || lat > 90) {
-//     throw new Error('Latitude must be between -90 and 90.');
+//     throw new Error('Latitude must be between -90 and 90');
 //   }
 
 //   if (lng < -180 || lng > 180) {
-//     throw new Error('Longitude must be between -180 and 180.');
+//     throw new Error('Longitude must be between -180 and 180');
 //   }
 
 //   return `(${lat}, ${lng})`;
@@ -638,95 +638,111 @@
 
  ******************************************************************************/
 
-function mimeFromFilename(filename) {
-  // Step 1: Extract the file extension
-  let ext = '';
-  const lastDotIndex = filename.lastIndexOf('.');
+// function mimeFromFilename(filename) {
+//   // Get the file extension and format
+//   let ext = '';
+//   const lastDotIndex = filename.lastIndexOf('.');
 
-  if (lastDotIndex !== -1 && lastDotIndex < filename.length - 1) {
-    ext = filename.substring(lastDotIndex + 1).toLowerCase();
-  } else {
-    // No extension found
-    return 'application/octet-stream';
-  }
+//   if (lastDotIndex !== -1 && lastDotIndex < filename.length - 1) {
+//     ext = filename.substring(lastDotIndex + 1).toLowerCase();
+//   } else {
+//     return 'application/octet-stream';
+//   }
 
-  // Step 2: Normalize the extension (already converted to lowercase and no leading dot)
+//   // MIME types
+//   switch (ext) {
+//     case 'html':
+//     case 'htm':
+//       return 'text/html';
 
-  // Step 3: Use a switch statement to map extensions to MIME types
-  switch (ext) {
-    case 'html':
-    case 'htm':
-      return 'text/html';
+//     case 'css':
+//       return 'text/css';
 
-    case 'css':
-      return 'text/css';
+//     case 'js':
+//       return 'text/javascript';
 
-    case 'js':
-      return 'text/javascript';
+//     case 'txt':
+//       return 'text/plain';
 
-    case 'txt':
-      return 'text/plain';
+//     case 'jpg':
+//     case 'jpeg':
+//       return 'image/jpeg';
 
-    case 'jpg':
-    case 'jpeg':
-      return 'image/jpeg';
+//     case 'gif':
+//       return 'image/gif';
 
-    case 'gif':
-      return 'image/gif';
+//     case 'bmp':
+//       return 'image/bmp';
 
-    case 'bmp':
-      return 'image/bmp';
+//     case 'ico':
+//     case 'cur':
+//       return 'image/x-icon';
 
-    case 'ico':
-    case 'cur':
-      return 'image/x-icon';
+//     case 'png':
+//       return 'image/png';
 
-    case 'png':
-      return 'image/png';
+//     case 'svg':
+//       return 'image/svg+xml';
 
-    case 'svg':
-      return 'image/svg+xml';
+//     case 'webp':
+//       return 'image/webp';
 
-    case 'webp':
-      return 'image/webp';
+//     case 'mp3':
+//       return 'audio/mp3';
 
-    case 'mp3':
-      return 'audio/mp3';
+//     case 'wav':
+//       return 'audio/wav';
 
-    case 'wav':
-      return 'audio/wav';
+//     case 'mp4':
+//       return 'video/mp4';
 
-    case 'mp4':
-      return 'video/mp4';
+//     case 'webm':
+//       return 'video/webm';
 
-    case 'webm':
-      return 'video/webm';
+//     case 'json':
+//       return 'application/json';
 
-    case 'json':
-      return 'application/json';
+//     case 'mpeg':
+//       return 'video/mpeg';
 
-    case 'mpeg':
-      return 'video/mpeg';
+//     case 'csv':
+//       return 'text/csv';
 
-    case 'csv':
-      return 'text/csv';
+//     case 'ttf':
+//       return 'font/ttf';
 
-    case 'ttf':
-      return 'font/ttf';
+//     case 'woff':
+//       return 'font/woff';
 
-    case 'woff':
-      return 'font/woff';
+//     case 'zip':
+//       return 'application/zip';
 
-    case 'zip':
-      return 'application/zip';
+//     case 'avi':
+//       return 'video/x-msvideo';
 
-    case 'avi':
-      return 'video/x-msvideo';
+//     default:
+//       return 'application/octet-stream';
+//   }
+// }
 
-    default:
-      return 'application/octet-stream';
-  }
-}
+// // Test
+// console.log(mimeFromFilename('/User/Documents/readme.txt')); 
+// console.log(mimeFromFilename('index.html')); 
+// console.log(mimeFromFilename('style.CSS')); 
+// console.log(mimeFromFilename('script.min.JS')); 
+// console.log(mimeFromFilename('photo.jpeg')); 
+// console.log(mimeFromFilename('icon.ICO')); 
+// console.log(mimeFromFilename('vector.SVG')); 
+// console.log(mimeFromFilename('audio.mp3')); 
+// console.log(mimeFromFilename('video.mp4')); 
+// console.log(mimeFromFilename('archive.zip')); 
+// console.log(mimeFromFilename('document')); 
+// console.log(mimeFromFilename('.hiddenfile')); 
+// console.log(mimeFromFilename('unknown.ext')); 
+// console.log(mimeFromFilename('image.PNG')); 
+// console.log(mimeFromFilename('font.woff')); 
+// console.log(mimeFromFilename('movie.mpeg')); 
+// console.log(mimeFromFilename('data.csv')); 
 
 
 /*******************************************************************************
@@ -775,9 +791,57 @@ function mimeFromFilename(filename) {
  *
  ******************************************************************************/
 
-function generateLicenseLink(licenseCode, targetBlank) {
-  // Replace this comment with your code...
-}
+// function generateLicenseLink(licenseCode, targetBlank = false) {
+//   // Define licenses
+//   const licenses = {
+//     'CC-BY': 'Creative Commons Attribution License',
+//     'CC-BY-NC': 'Creative Commons Attribution-NonCommercial License',
+//     'CC-BY-SA': 'Creative Commons Attribution-ShareAlike License',
+//     'CC-BY-ND': 'Creative Commons Attribution-NoDerivs License',
+//     'CC-BY-NC-SA': 'Creative Commons Attribution-NonCommercial-ShareAlike License',
+//     'CC-BY-NC-ND': 'Creative Commons Attribution-NonCommercial-NoDerivs License'
+//   };
+
+//   // Valid or invalid licenses and url
+//   let explanation = licenses[licenseCode];
+//   let url;
+
+//   if (explanation) {
+//     const formattedCode = licenseCode.replace('CC-', '').toLowerCase();
+//     url = `https://creativecommons.org/licenses/${formattedCode}/4.0/`;
+//   } else {
+//     url = 'https://choosealicense.com/no-permission/';
+//     explanation = 'All Rights Reserved';
+//   }
+
+//   // <a> tag
+//   const targetAttr = targetBlank ? ' target="_blank"' : '';
+//   return `<a href="${url}"${targetAttr}>${explanation}</a>`;
+// }
+
+// function testGenerateLicenseLink(licenseCode, targetBlank) {
+//   console.log(
+//     `generateLicenseLink('${licenseCode}', ${targetBlank}) => ${generateLicenseLink(licenseCode, targetBlank)}`
+//   );
+// }
+
+// // Test
+
+// // good
+// testGenerateLicenseLink('CC-BY', false);
+// testGenerateLicenseLink('CC-BY-NC', true);
+// testGenerateLicenseLink('CC-BY-SA', false);
+// testGenerateLicenseLink('CC-BY-ND', true);
+// testGenerateLicenseLink('CC-BY-NC-SA', false);
+// testGenerateLicenseLink('CC-BY-NC-ND', true);
+
+// // bad
+// testGenerateLicenseLink('CC-INVALID', false);
+// testGenerateLicenseLink('', false);
+// testGenerateLicenseLink(null, true);
+// testGenerateLicenseLink('XYZ', false);
+
+
 
 /*******************************************************************************
  * Problem 9 Part 1: convert a value to a Boolean (true or false)
@@ -801,9 +865,72 @@ function generateLicenseLink(licenseCode, targetBlank) {
  *
  ******************************************************************************/
 
-function pureBool(value) {
-  // Replace this comment with your code...
-}
+// function pureBool(value) {
+//   // Boolean inputs
+//   if (typeof value === 'boolean') {
+//     return value;
+//   }
+
+//   // Input manipulation
+//   const normalized = String(value).trim().toLowerCase();
+
+//   // T/F sets
+//   const trueValues = new Set([
+//     'yes', 'y', 'oui', 'o', 't', 'true', 'vrai', 'v', '1', '2'
+//   ]);
+//   const falseValues = new Set([
+//     'no', 'n', 'non', 'f', 'false', 'faux', '0', '-1', '-2'
+//   ]);
+
+//   // Check inputs against t or f
+//   if (trueValues.has(normalized)) {
+//     return true;
+//   }
+//   if (falseValues.has(normalized)) {
+//     return false;
+//   }
+
+//   // Number handling
+//   const numValue = Number(value);
+//   if (!isNaN(numValue)) {
+//     return numValue > 0;
+//   }
+
+//   throw new Error('invalid value');
+// }
+
+// function testPureBool(value) {
+//   try {
+//     console.log(`pureBool(${value}) => ${pureBool(value)}`);
+//   } catch (error) {
+//     console.error(`pureBool(${value}) threw an error: ${error.message}`);
+//   }
+// }
+
+// // Test
+
+// // good true
+// testPureBool('yes');
+// testPureBool('Y');
+// testPureBool('Oui');
+// testPureBool('1');
+// testPureBool(2);
+// testPureBool(true);
+
+// // good false
+// testPureBool('no');
+// testPureBool('n');
+// testPureBool('non');
+// testPureBool('false');
+// testPureBool('-1');
+// testPureBool(0);
+// testPureBool(false);
+
+// // bad
+// testPureBool('invalid');
+// testPureBool(null);
+// testPureBool(undefined);
+
 
 /*******************************************************************************
  * Problem 9 Part 2: checking for all True or all False values in a normalized list
@@ -819,17 +946,42 @@ function pureBool(value) {
  * throws on invalid data.
  ******************************************************************************/
 
-function every() {
-  // Replace this comment with your code...
-}
+// function every(...values) {
+//   try {
+//     return values.every(value => pureBool(value) === true);
+//   } catch {
+//     return false; 
+//   }
+// }
 
-function any() {
-  // Replace this comment with your code...
-}
+// function any(...values) {
+//   try {
+//     return values.some(value => pureBool(value) === true);
+//   } catch {
+//     return false; 
+//   }
+// }
 
-function none() {
-  // Replace this comment with your code...
-}
+// function none(...values) {
+//   try {
+//     return values.every(value => pureBool(value) === false);
+//   } catch {
+//     return false; 
+//   }
+// }
+
+// // Nifty test function
+// function testBooleanChecks() {
+//   console.log(every('Y', 'yes', 1)); 
+//   console.log(every('Y', 'no', 1)); 
+//   console.log(any('Y', 'no', 1)); 
+//   console.log(any('no', 'non', 0)); 
+//   console.log(none('no', 'non', 0)); 
+//   console.log(none('Y', 'invalid', 1)); 
+// }
+
+// testBooleanChecks();
+
 
 /*******************************************************************************
  * Problem 10 - build a URL
@@ -882,7 +1034,68 @@ function none() {
  *
  ******************************************************************************/
 
-function buildUrl(query, order, count, license) {
-  // Replace this comment with your code...
-  //returns the properly formatted iNaturlist URL
-}
+// function buildUrl(query, order, count, license) {
+  
+//   // Validations
+  
+//   if (typeof query !== 'string' || query.trim() === '') {
+//     throw new Error('Query must be a valid string');
+//   }
+
+//   const validOrders = ['ascending', 'descending'];
+//   if (!validOrders.includes(order)) {
+//     throw new Error('Order must be either ascending or descending');
+//   }
+
+//   if (typeof count !== 'number' || count < 1 || count > 50) {
+//     throw new Error('Must be a number between 1 and 50');
+//   }
+
+//   const validLicenses = [
+//     'none',
+//     'any',
+//     'cc-by',
+//     'cc-by-nc',
+//     'cc-by-sa',
+//     'cc-by-nd',
+//     'cc-by-nc-sa',
+//     'cc-by-nc-nd',
+//   ];
+//   if (!validLicenses.includes(license)) {
+//     throw new Error(
+//       'Must be one of the following: "none", "any", "cc-by", "cc-by-nc", "cc-by-sa", "cc-by-nd", "cc-by-nc-sa", "cc-by-nc-nd"'
+//     );
+//   }
+
+//   // Encode query (note to self: format for URL)
+//   const encodedQuery = encodeURIComponent(query);
+
+//   // Build URL
+//   const baseUrl = 'https://api.inaturalist.org/v2/observations';
+//   const url = `${baseUrl}?query='${encodedQuery}'&count=${count}&order=${order}&license=${license}`;
+
+//   return url;
+// }
+
+// // Test
+
+// function testBuildUrl(query, order, count, license) {
+//   try {
+//     console.log(buildUrl(query, order, count, license));
+//   } catch (error) {
+//     console.error(`Error: ${error.message}`);
+//   }
+// }
+
+// // good
+// testBuildUrl('Cats Dogs', 'ascending', 25, 'cc-by');
+// testBuildUrl('Cat-Dog', 'descending', 50, 'cc-by-nc');
+// testBuildUrl('Mount Pearl', 'ascending', 1, 'any');
+// testBuildUrl('Keyin College', 'descending', 10, 'none');
+
+// // bad
+// testBuildUrl('', 'ascending', 25, 'cc-by'); 
+// testBuildUrl('Giant Squid', 'upward', 25, 'cc-by'); 
+// testBuildUrl('Buckingham Palace', 'ascending', 0, 'cc-by'); 
+// testBuildUrl('London England', 'ascending', 25, 'unknown-license'); 
+
